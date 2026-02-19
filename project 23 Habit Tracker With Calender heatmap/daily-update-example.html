@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Update Example - Habit Tracker</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .day-example {
+            background: #2a2a2a;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #cbd5e0;
+        }
+        .calendar-demo {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin: 15px 0;
+            max-width: 300px;
+        }
+        .day-cell {
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .stats-demo {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .stat-box {
+            background: #3a3a3a;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .habit-status {
+            display: flex;
+            gap: 20px;
+            margin: 10px 0;
+        }
+        .habit {
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .completed { background: #4a7c59; }
+        .incomplete { background: #7c4a4a; }
+        .code-block {
+            background: #1e1e1e;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        h1 { color: #cbd5e0; text-align: center; }
+        h2 { color: #a0aec0; border-bottom: 2px solid #3a3a3a; padding-bottom: 10px; }
+        h3 { color: #718096; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🗓️ Daily Update Example: Habit Tracker</h1>
+        <p style="text-align: center; color: #a0a0a0; margin-bottom: 40px;">
+            See exactly how the habit tracker updates each day with real examples
+        </p>
+
+        <h2>📋 Initial Setup</h2>
+        <p>User creates two habits: <strong>"Exercise"</strong> and <strong>"Read Book"</strong></p>
+        <div class="code-block">
+let habits = [
+  { 
+    id: 1, 
+    name: "Exercise", 
+    completion: {} 
+  },
+  { 
+    id: 2, 
+    name: "Read Book", 
+    completion: {} 
+  }
+];
+        </div>
+
+        <div class="day-example">
+            <h3>📅 Day 1: February 18, 2026</h3>
+            
+            <h4>User Actions:</h4>
+            <div class="habit-status">
+                <div class="habit completed">✅ Exercise</div>
+                <div class="habit incomplete">❌ Read Book</div>
+            </div>
+
+            <h4>Code Execution:</h4>
+            <div class="code-block">
+habits[0].completion["2026-02-18"] = true;   // Exercise completed
+habits[1].completion["2026-02-18"] = false;  // Read Book not done
+            </div>
+
+            <h4>Calendar Heatmap:</h4>
+            <div class="calendar-demo">
+                <div class="day-cell" style="background: #718096; color: #1a1a1a;">18</div>
+                <div class="day-cell" style="background: #2a2a2a; color: #a0a0a0;">19</div>
+                <div class="day-cell" style="background: #2a2a2a; color: #a0a0a0;">20</div>
+                <div class="day-cell" style="background: #2a2a2a; color: #a0a0a0;">21</div>
+                <div class="day-cell" style="background: #2a2a2a; color: #a0a0a0;">22</div>
+                <div class="day-cell" style="background: #2a2a2a; color: #a0a0a0;">23</div>
+                <div class="day-cell" style="background: #2a2a2a; color: #a0a0a0;">24</div>
+            </div>
+            <p><strong>Color:</strong> Medium gray (#718096) - 1 out of 2 habits completed (50%)</p>
+
+            <h4>Statistics Update:</h4>
+            <div class="stats-demo">
+                <div class="stat-box">
+                    <div>Current Streak</div>
+                    <div style="font-size: 1.5em; color: #cbd5e0;">1 day</div>
+                </div>
+                <div class="stat-box">
+                    <div>Completion Rate</div>
+                    <div style="font-size: 1.5em; color: #cbd5e0;">50%</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-example">
+            <h3>📅 Day 2: February 19, 2026</h3>
+            
+            <h4>User Actions:</h4>
+            <div class="habit-status">
+                <div class="habit completed">✅ Exercise</div>
+                <div class="habit completed">✅ Read Book</div>
+            </div>
+
+            <h4>Code Execution:</h4>
+            <div class="code-block">
+habits[0].completion["2026-02-19"] = true;   // Exercise completed
+habits[1].completion["2026-02-19"] = true;   // Read Book completed
+            </div>
+
+            <h4>Calendar Heatmap:</h4>
+            <div class="calendar-demo">
+                <div class="day-cell" style="background: #718096; color: #1a1a1a;">18</div>
+                <div class="day-cell" style="background: #cbd5e0; color: #1a1a1a;">19</div>
+                <div class="day-cell" style="background: #2a2a2a; color: #a0a0a0;">20</div>
+                <div class="day-cell" style="background: #2a2a2a; color: #a0a0a0;">21</div>
+                <div class="day-cell" style="background: #2a2a2a; color: #a0a0a0;">22</div>
+                <div class="day-cell" style="background: #2a2a2a; color: #a0a0a0;">23</div>
+                <div class="day-cell" style="background: #2a2a2a; color: #a0a0a0;">24</div>
+            </div>
+            <p><strong>Color:</strong> Light gray (#cbd5e0) - 2 out of 2 habits completed (100%)</p>
+
+            <h4>Statistics Update:</h4>
+            <div class="stats-demo">
+                <div class="stat-box">
+                    <div>Current Streak</div>
+                    <div style="font-size: 1.5em; color: #cbd5e0;">2 days</div>
+                </div>
+                <div class="stat-box">
+                    <div>Completion Rate</div>
+                    <div style="font-size: 1.5em; color: #cbd5e0;">75%</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-example">
+            <h3>📅 Day 3: February 20, 2026</h3>
+            
+            <h4>User Actions:</h4>
+            <div class="habit-status">
+                <div class="habit completed">✅ Exercise</div>
+                <div class="habit incomplete">❌ Read Book</div>
+            </div>
+
+            <h4>Code Execution:</h4>
+            <div class="code-block">
+habits[0].completion["2026-02-20"] = true;   // Exercise completed
+habits[1].completion["2026-02-20"] = false;  // Read Book not done
+            </div>
+
+            <h4>Calendar Heatmap:</h4>
+            <div class="calendar-demo">
+                <div class="day-cell" style="background: #718096; color: #1a1a1a;">18</div>
+                <div class="day-cell" style="background: #cbd5e0; color: #1a1a1a;">19</div>
+                <div class="day-cell" style="background: #718096; color: #1a1a1a;">20</div>
+                <div class="day-cell" style="background: #2a2a2a; color: #a0a0a0;">21</div>
+                <div class="day-cell" style="background: #2a2a2a; color: #a0a0a0;">22</div>
+                <div class="day-cell" style="background: #2a2a2a; color: #a0a0a0;">23</div>
+                <div class="day-cell" style="background: #2a2a2a; color: #a0a0a0;">24</div>
+            </div>
+            <p><strong>Color:</strong> Medium gray (#718096) - 1 out of 2 habits completed (50%)</p>
+
+            <h4>Statistics Update:</h4>
+            <div class="stats-demo">
+                <div class="stat-box">
+                    <div>Current Streak</div>
+                    <div style="font-size: 1.5em; color: #cbd5e0;">3 days</div>
+                </div>
+                <div class="stat-box">
+                    <div>Completion Rate</div>
+                    <div style="font-size: 1.5em; color: #cbd5e0;">67%</div>
+                </div>
+            </div>
+        </div>
+
+        <h2>🔧 How Daily Updates Work (Technical)</h2>
+        
+        <h3>1. User Interaction</h3>
+        <div class="code-block">
+function markComplete(habitId) {
+    const today = getTodayString(); // "2026-02-18"
+    const habit = habits.find(h => h.id === habitId);
+    
+    habit.completion[today] = !habit.completion[today];
+    saveData();           // Save to localStorage
+    renderCalendar();     // Update heatmap colors
+    renderStats();        // Recalculate streaks
+}
+        </div>
+
+        <h3>2. Calendar Color Calculation</h3>
+        <div class="code-block">
+function getHeatmapColor(completionCount, totalHabits) {
+    const percentage = completionCount / totalHabits;
+    
+    if (percentage === 0) return '#2a2a2a';      // Dark (0%)
+    if (percentage <= 0.25) return '#4a5568';   // Very light
+    if (percentage <= 0.5) return '#718096';    // Light
+    if (percentage <= 0.75) return '#a0aec0';   // Medium
+    return '#cbd5e0';                           // Bright (100%)
+}
+        </div>
+
+        <h3>3. Statistics Calculation</h3>
+        <div class="code-block">
+// Current Streak: Count consecutive days with at least 1 habit
+function getCurrentStreak() {
+    let streak = 0;
+    let date = new Date();
+    
+    while (getCompletionCount(dateStr) > 0) {
+        streak++;
+        date.setDate(date.getDate() - 1);
+    }
+    return streak;
+}
+
+// Completion Rate: Last 30 days percentage
+function getCompletionRate() {
+    let totalCompleted = 0, totalPossible = 0;
+    
+    // Loop through last 30 days
+    for (let d = thirtyDaysAgo; d <= today; d++) {
+        habits.forEach(habit => {
+            totalPossible++;
+            if (habit.completion[dateStr]) totalCompleted++;
+        });
+    }
+    
+    return Math.round((totalCompleted / totalPossible) * 100);
+}
+        </div>
+
+        <h2>📊 Summary Table</h2>
+        <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+            <thead>
+                <tr style="background: #3a3a3a;">
+                    <th style="padding: 12px; border: 1px solid #4a4a4a;">Date</th>
+                    <th style="padding: 12px; border: 1px solid #4a4a4a;">Exercise</th>
+                    <th style="padding: 12px; border: 1px solid #4a4a4a;">Read Book</th>
+                    <th style="padding: 12px; border: 1px solid #4a4a4a;">Completion %</th>
+                    <th style="padding: 12px; border: 1px solid #4a4a4a;">Heatmap Color</th>
+                    <th style="padding: 12px; border: 1px solid #4a4a4a;">Streak</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid #4a4a4a;">Feb 18</td>
+                    <td style="padding: 12px; border: 1px solid #4a4a4a;">✅</td>
+                    <td style="padding: 12px; border: 1px solid #4a4a4a;">❌</td>
+                    <td style="padding: 12px; border: 1px solid #4a4a4a;">50%</td>
+                    <td style="padding: 12px; border: 1px solid #4a4a4a; background: #718096;">Medium Gray</td>
+                    <td style="padding: 12px; border: 1px solid #4a4a4a;">1</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid #4a4a4a;">Feb 19</td>
+                    <td style="padding: 12px; border: 1px solid #4a4a4a;">✅</td>
+                    <td style="padding: 12px; border: 1px solid #4a4a4a;">✅</td>
+                    <td style="padding: 12px; border: 1px solid #4a4a4a;">100%</td>
+                    <td style="padding: 12px; border: 1px solid #4a4a4a; background: #cbd5e0; color: #1a1a1a;">Light Gray</td>
+                    <td style="padding: 12px; border: 1px solid #4a4a4a;">2</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid #4a4a4a;">Feb 20</td>
+                    <td style="padding: 12px; border: 1px solid #4a4a4a;">✅</td>
+                    <td style="padding: 12px; border: 1px solid #4a4a4a;">❌</td>
+                    <td style="padding: 12px; border: 1px solid #4a4a4a;">50%</td>
+                    <td style="padding: 12px; border: 1px solid #4a4a4a; background: #718096;">Medium Gray</td>
+                    <td style="padding: 12px; border: 1px solid #4a4a4a;">3</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🎯 Key Points</h2>
+        <ul style="background: #2a2a2a; padding: 20px; border-radius: 8px;">
+            <li><strong>Real-time Updates:</strong> Every checkbox click immediately updates the calendar and stats</li>
+            <li><strong>Color Intensity:</strong> More habits completed = brighter color on that day</li>
+            <li><strong>Persistent Data:</strong> All data saved to localStorage, survives page refresh</li>
+            <li><strong>Streak Logic:</strong> Counts consecutive days with at least 1 habit completed</li>
+            <li><strong>Completion Rate:</strong> Calculated over the last 30 days for meaningful trends</li>
+        </ul>
+    </div>
+</body>
+</html>

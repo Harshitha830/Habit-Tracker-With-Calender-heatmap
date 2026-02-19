@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Update Demo</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            padding: 20px;
+        }
+        .demo-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #2a2a2a;
+            padding: 30px;
+            border-radius: 12px;
+        }
+        .habit-demo {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            align-items: center;
+        }
+        .habit-checkbox {
+            width: 24px;
+            height: 24px;
+            accent-color: #cbd5e0;
+        }
+        .calendar-mini {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin: 20px 0;
+            max-width: 350px;
+        }
+        .day-mini {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .stats-live {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat-live {
+            background: #3a3a3a;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 1.8em;
+            color: #cbd5e0;
+            font-weight: bold;
+        }
+        .data-display {
+            background: #1e1e1e;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 14px;
+            margin: 15px 0;
+            white-space: pre-wrap;
+        }
+        button {
+            background: #cbd5e0;
+            color: #1a1a1a;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+        }
+        button:hover {
+            background: #e2e8f0;
+        }
+        h1, h2 { color: #cbd5e0; }
+        h3 { color: #a0aec0; }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1>🔴 LIVE Update Demo</h1>
+        <p>Click the checkboxes below to see exactly how the habit tracker updates in real-time!</p>
+
+        <h3>Today's Habits (Feb 20, 2026)</h3>
+        <div class="habit-demo">
+            <input type="checkbox" class="habit-checkbox" id="exercise" onchange="updateHabit('exercise')">
+            <label for="exercise">💪 Exercise (30 min)</label>
+        </div>
+        <div class="habit-demo">
+            <input type="checkbox" class="habit-checkbox" id="reading" onchange="updateHabit('reading')">
+            <label for="reading">📚 Read Book (20 min)</label>
+        </div>
+        <div class="habit-demo">
+            <input type="checkbox" class="habit-checkbox" id="water" onchange="updateHabit('water')">
+            <label for="water">💧 Drink 8 Glasses Water</label>
+        </div>
+
+        <h3>Calendar Heatmap (This Week)</h3>
+        <div class="calendar-mini" id="calendar"></div>
+
+        <h3>Live Statistics</h3>
+        <div class="stats-live">
+            <div class="stat-live">
+                <div>Today's Progress</div>
+                <div class="stat-value" id="todayProgress">0/3</div>
+            </div>
+            <div class="stat-live">
+                <div>Completion %</div>
+                <div class="stat-value" id="completionPercent">0%</div>
+            </div>
+            <div class="stat-live">
+                <div>Current Streak</div>
+                <div class="stat-value" id="currentStreak">0 days</div>
+            </div>
+        </div>
+
+        <h3>Data Structure (Live)</h3>
+        <div class="data-display" id="dataDisplay"></div>
+
+        <h3>Quick Actions</h3>
+        <button onclick="simulateDay('2026-02-18', [true, false, true])">Simulate Feb 18 (2/3 habits)</button>
+        <button onclick="simulateDay('2026-02-19', [true, true, true])">Simulate Feb 19 (3/3 habits)</button>
+        <button onclick="resetDemo()">Reset Demo</button>
+    </div>
+
+    <script>
+        // Demo data structure
+        let demoHabits = {
+            exercise: { name: "Exercise", completion: {} },
+            reading: { name: "Read Book", completion: {} },
+            water: { name: "Drink Water", completion: {} }
+        };
+
+        const today = "2026-02-20";
+        const weekDays = [
+            "2026-02-17", "2026-02-18", "2026-02-19", 
+            "2026-02-20", "2026-02-21", "2026-02-22", "2026-02-23"
+        ];
+
+        // Initialize demo
+        function initDemo() {
+            // Set some previous days data
+            demoHabits.exercise.completion["2026-02-17"] = true;
+            demoHabits.reading.completion["2026-02-17"] = false;
+            demoHabits.water.completion["2026-02-17"] = true;
+            
+            updateDisplay();
+        }
+
+        // Update habit completion
+        function updateHabit(habitId) {
+            const checkbox = document.getElementById(habitId);
+            demoHabits[habitId].completion[today] = checkbox.checked;
+            
+            console.log(`✅ Updated ${habitId} for ${today}: ${checkbox.checked}`);
+            updateDisplay();
+        }
+
+        // Simulate a complete day
+        function simulateDay(date, completions) {
+            const habitIds = ['exercise', 'reading', 'water'];
+            
+            habitIds.forEach((id, index) => {
+                demoHabits[id].completion[date] = completions[index];
+            });
+            
+            console.log(`📅 Simulated ${date}:`, completions);
+            updateDisplay();
+        }
+
+        // Reset demo
+        function resetDemo() {
+            Object.keys(demoHabits).forEach(id => {
+                demoHabits[id].completion = {};
+                document.getElementById(id).checked = false;
+            });
+            updateDisplay();
+        }
+
+        // Update all displays
+        function updateDisplay() {
+            updateCalendar();
+            updateStats();
+            updateDataDisplay();
+        }
+
+        // Update calendar heatmap
+        function updateCalendar() {
+            const calendar = document.getElementById('calendar');
+            
+            calendar.innerHTML = weekDays.map(date => {
+                const day = new Date(date).getDate();
+                const completionCount = getCompletionCount(date);
+                const color = getHeatmapColor(completionCount, 3);
+                const textColor = completionCount > 1 ? '#1a1a1a' : '#a0a0a0';
+                
+                return `<div class="day-mini" style="background: ${color}; color: ${textColor}">${day}</div>`;
+            }).join('');
+        }
+
+        // Get completion count for a date
+        function getCompletionCount(date) {
+            return Object.values(demoHabits).filter(habit => habit.completion[date]).length;
+        }
+
+        // Get heatmap color
+        function getHeatmapColor(count, total) {
+            if (count === 0) return '#2a2a2a';
+            const percentage = count / total;
+            if (percentage <= 0.33) return '#4a5568';
+            if (percentage <= 0.66) return '#718096';
+            return '#cbd5e0';
+        }
+
+        // Update statistics
+        function updateStats() {
+            const todayCount = getCompletionCount(today);
+            const percentage = Math.round((todayCount / 3) * 100);
+            const streak = calculateStreak();
+            
+            document.getElementById('todayProgress').textContent = `${todayCount}/3`;
+            document.getElementById('completionPercent').textContent = `${percentage}%`;
+            document.getElementById('currentStreak').textContent = `${streak} days`;
+        }
+
+        // Calculate current streak
+        function calculateStreak() {
+            let streak = 0;
+            const sortedDates = weekDays.slice().reverse();
+            
+            for (let date of sortedDates) {
+                if (getCompletionCount(date) > 0) {
+                    streak++;
+                } else {
+                    break;
+                }
+            }
+            return streak;
+        }
+
+        // Update data display
+        function updateDataDisplay() {
+            const display = document.getElementById('dataDisplay');
+            const formatted = JSON.stringify(demoHabits, null, 2)
+                .replace(/true/g, '✅ true')
+                .replace(/false/g, '❌ false');
+            
+            display.textContent = `// Live Data Structure\nlet demoHabits = ${formatted}`;
+        }
+
+        // Initialize on load
+        initDemo();
+    </script>
+</body>
+</html>

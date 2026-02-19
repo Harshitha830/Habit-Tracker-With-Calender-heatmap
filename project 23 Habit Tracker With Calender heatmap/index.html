@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habit Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div>
+                    <h1>Habit Tracker</h1>
+                    <p>Build better habits, one day at a time</p>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
+        </header>
+
+        <section class="habit-input">
+            <input type="text" id="habitName" placeholder="Enter new habit..." maxlength="30">
+            <button onclick="addHabit()">Add Habit</button>
+        </section>
+
+        <section class="habit-list" id="habitList"></section>
+
+        <section class="calendar-section">
+            <div class="calendar-header">
+                <button onclick="changeMonth(-1)">←</button>
+                <h2 id="currentMonth"></h2>
+                <button onclick="changeMonth(1)">→</button>
+            </div>
+            <div class="calendar-heatmap" id="calendarHeatmap"></div>
+            <div class="legend">
+                <span>Less</span>
+                <div class="legend-colors">
+                    <div class="legend-box" style="background: var(--level-0)"></div>
+                    <div class="legend-box" style="background: var(--level-1)"></div>
+                    <div class="legend-box" style="background: var(--level-2)"></div>
+                    <div class="legend-box" style="background: var(--level-3)"></div>
+                    <div class="legend-box" style="background: var(--level-4)"></div>
+                </div>
+                <span>More</span>
+            </div>
+        </section>
+
+        <section class="statistics" id="stats">
+            <div class="stat-card">
+                <h3>Current Streak</h3>
+                <p id="currentStreak">0 days</p>
+            </div>
+            <div class="stat-card">
+                <h3>Longest Streak</h3>
+                <p id="longestStreak">0 days</p>
+            </div>
+            <div class="stat-card">
+                <h3>Completion Rate</h3>
+                <p id="completionRate">0%</p>
+            </div>
+            <div class="stat-card">
+                <h3>Total Completed</h3>
+                <p id="totalCompleted">0</p>
+            </div>
+        </section>
+
+        <div class="tooltip" id="tooltip"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
